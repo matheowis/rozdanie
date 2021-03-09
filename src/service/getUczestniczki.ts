@@ -6,7 +6,7 @@ const headers = {
 }
 
 export const getUczestniczki = () => new Promise<string[][]>((resolve, reject) => {
-  fetch(`${location.origin}/uczestniczki_raw.txt`, {
+  fetch(`${location.href}uczestniczki_raw.txt`, {
     method: 'GET',
     headers,
   }).then(res => res.text())
