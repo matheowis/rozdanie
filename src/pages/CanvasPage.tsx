@@ -32,9 +32,9 @@ const CanvasPage = () => {
 
     if (!canv) return;
 
-    const imagesInRow = 64;
+    const imagesInRow = 32;
 
-    const coords = getRandomCoords(imagesInRow, 4);
+    const coords = getRandomCoords(imagesInRow, 8);
 
     for (var i = 0; i < coords.length; i++) {
       drawAvatar(canv, coords[i].x, coords[i].y, imagesInRow);
