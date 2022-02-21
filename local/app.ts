@@ -2,6 +2,7 @@ import fs = require('fs')
 
 import { filterOutOldRepetitions, getCorrectComments, getTopCommenters } from './utils/filters';
 import { processInputFiles } from './utils/processInputFiles';
+import { saveAllProfilePictures } from './service/getProfilePictures';
 
 
 const processAllFiles = async () => {
@@ -12,6 +13,8 @@ const processAllFiles = async () => {
   const allComments = filterOutOldRepetitions(results.flat());
   const correctComments = getCorrectComments(allComments);
 
+  const imagesMap = await saveAllProfilePictures(correctComments);
+
   // const commentsToSave = correctComments.map(v => `${v.username}: @${v.attached}`).join('\n');
   const commentsToSave = correctComments.map(v => `${v.username}`).join('\n');
 
@@ -20,6 +23,7 @@ const processAllFiles = async () => {
 
   fs.writeFileSync(__dirname + '/output/commentsToPrint.txt', commentsToSave);
   fs.writeFileSync(__dirname + '/output/stats.txt', topComentersToSave);
+  fs.writeFileSync(__dirname + '/output/imagesMap.json', JSON.stringify(imagesMap, undefined, 1));
 
 }
 

@@ -1,11 +1,13 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import MainPage from './MainPage';
+import MainPage from './pages/MainPage';
+import CanvasPage from './pages/CanvasPage';
 
 const reactContainer = document.getElementById('app');
 
 const jsx = (
-    <MainPage />
+    // <MainPage />
+    <CanvasPage />
 )
 
 ReactDOM.render(jsx, reactContainer);

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { getUczestniczki } from './service/getUczestniczki';
+import { getUczestniczki } from '../service/getUczestniczki';
 import { RefreshRounded } from '@material-ui/icons';
 import { IconButton, Typography, Button } from '@material-ui/core';
-import { lerp } from './utils/calc';
+import { lerp } from '../utils/calc';
 import { grey } from '@material-ui/core/colors';
-import Center from './Center';
+import Center from '../Center';
 
 interface IWinner {
   name: string

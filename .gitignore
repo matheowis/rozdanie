@@ -5,3 +5,4 @@ local/*/*.js
 local/*/*.js.map
 local/input/*
 local/output/*
+local/images/*
