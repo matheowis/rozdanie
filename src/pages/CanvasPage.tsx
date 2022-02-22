@@ -1,7 +1,13 @@
 import * as React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { Button, makeStyles, CircularProgress } from '@material-ui/core';
 import { drawAvatar } from '../functions/drawAvatar';
 import { getRandomCoords } from '../functions/getRandomCoord';
+import { IComment } from '../interfaces/IComment.interface';
+import { createAvatarImages } from '../functions/createAvatarImages';
+import { SIZE } from '../constants/main.constants';
+import { lerp } from '../utils/calc';
+import {saveData} from '../functions/saveData';
+import { IAvatarImage } from '../interfaces/IAvatarImage.interface';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -16,66 +22,99 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'center',
     height: window.innerHeight,
 
+  },
+  container: {
+    position: 'relative',
+    width: SIZE,
+    height: SIZE,
+    overflow: 'hidden',
   }
 }));
 
-const CANV_SIZE = 1024
+// const CANV_SIZE = 1024;
+
+const testObjs: IComment[] = new Array(20000).fill(0).map(_ => ({
+  comment: 'test comment',
+  commentDate: '1',
+  likeCount: 0,
+  profilePictureUrl: 'ja.jpg',
+  profileUrl: 't',
+  username: 'matheowis',
+}));
 
 const CanvasPage = () => {
-  const canvRef = React.createRef<HTMLCanvasElement>();
+  // const canvRef = React.createRef<HTMLCanvasElement>();
+  const containerRef = React.createRef<HTMLDivElement>();
+  const [loaded, setLoaded] = React.useState(false);
+  const [progress, setProgress] = React.useState(0);
+  const [avatars,setAvatars] = React.useState<IAvatarImage[]>();
   const cs = useStyles();
 
   React.useEffect(() => {
-    const canv = canvRef.current
+    console.log('START');
+    handleImages();
+    // const container = containerRef.current;
+    // if (!container) return;
+
+    // const avatarImages = createAvatarImages(testObjs);
+
+    // const start = Date.now();
+    // avatarImages.forEach(avatarImage => {
+    //   const canvToAdd = avatarImage.image;
+    //   const x = lerp(-128, 128, Math.random());
+    //   const y = lerp(-128, 128, Math.random());
+    //   canvToAdd.style.position = 'absolute';
+    //   canvToAdd.style.left = `${x}px`;
+    //   canvToAdd.style.bottom = `${y}px`;
+    //   // container.append(canvToAdd);
+    // });
 
 
+    // setTimeout(() => {
+    //   console.log(`texture creation too ${((Date.now() - 2000 - start) / 1000).toFixed(2)}s`,avatarImages.length)
+    //   console.log('timeout');
+    //   console.log(avatarImages[55].imgData);
+    // }, 2000);
+    // container.append(avatarImages[0].image);
+  }, [])
 
-    if (!canv) return;
+  const handleImages = async () => {
+    const container = containerRef.current;
+    
 
-    const imagesInRow = 32;
+    console.log('START');
+    const start = Date.now();
+    const avatarImages = await createAvatarImages(testObjs, p => setProgress(p));
 
-    const coords = getRandomCoords(imagesInRow, 8);
+    // avatarImages.forEach(avatarImage => {
+    //   const canvToAdd = avatarImage.image;
+    //   const x = lerp(-128, 128, Math.random());
+    //   const y = lerp(-128, 128, Math.random());
+    //   canvToAdd.style.position = 'absolute';
+    //   canvToAdd.style.left = `${x}px`;
+    //   canvToAdd.style.bottom = `${y}px`;
+    //   container?.append(canvToAdd);
+    // });
 
-    for (var i = 0; i < coords.length; i++) {
-      drawAvatar(canv, coords[i].x, coords[i].y, imagesInRow);
-    }
+    console.log(`FinishedIn ${((Date.now() - start) / 1000).toFixed(2)}s`);
+    setLoaded(true);
+    setAvatars(avatarImages);
 
-
-
-    // console.log(getRandomCoords(16));
-    // const tmpCtx = canv.getContext('2d');
-
-
-    // const img = document.createElement('img');
-    // img.src = "https://instagram.fktw5-1.fna.fbcdn.net/v/t51.2885-19/s150x150/172292152_280633316880907_4455588468525876496_n.jpg?_nc_ht=instagram.fktw5-1.fna.fbcdn.net&_nc_cat=107&_nc_ohc=8vXbo-Z9pdQAX-CwWSm&edm=AIQHJ4wBAAAA&ccb=7-4&oh=00_AT97a_vpUN4_o0mcZfIJhCRo7IaONpVvqFT0bOsOvergRA&oe=621B5BAA&_nc_sid=7b02f1"
-    // img.src = "ja.jpg"
-
-
-    // img.onload = () => {
-    //   if(!tmpCtx) return;
-    // tmpCtx.save();
-    // tmpCtx.beginPath();
-    // tmpCtx.arc(25, 25, 25, 0, Math.PI * 2, true);
-    // tmpCtx.closePath();
-    // tmpCtx.clip();
-
-    // tmpCtx.drawImage(img, 0, 0, 50, 50);
-
-    // tmpCtx.beginPath();
-    // tmpCtx.arc(0, 0, 25, 0, Math.PI * 2, true);
-    // tmpCtx.clip();
-    // tmpCtx.closePath();
-    // tmpCtx.restore();
-
-    // img.remove();
-    // ctx?.drawImage(img,0,0,48,48);
-    // }
-  })
+  }
 
   return (
     <div className={cs.root}>
-      <div className={cs.inner}>
-        <canvas width={CANV_SIZE} height={CANV_SIZE} ref={canvRef} />
+      <div
+        className={cs.inner}>
+        {/* <div
+          className={cs.container}
+          ref={containerRef}
+        > */}
+        {loaded ?
+          <Button variant='contained' color='primary' onClick={() => saveData(avatars)}>Get Images</Button> :
+          <CircularProgress variant="determinate" size={100} value={progress} />
+        }
+        {/* </div> */}
       </div>
     </div>
   )

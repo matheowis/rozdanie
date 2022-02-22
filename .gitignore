@@ -4,5 +4,9 @@ local/*.js.map
 local/*/*.js
 local/*/*.js.map
 local/input/*
+!local/input/note.txt
 local/output/*
+!local/output/note.txt
 local/images/*
+!local/images/note.txt
+notes/*

@@ -16,6 +16,7 @@
     "@types/node": "^17.0.18",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.2",
+    "file-saver": "^2.0.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
@@ -25,5 +26,10 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "@types/file-saver": "^2.0.5",
+    "express": "^4.17.3",
+    "jszip": "^3.7.1"
   }
 }
