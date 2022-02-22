@@ -10,3 +10,4 @@ local/output/*
 local/images/*
 !local/images/note.txt
 notes/*
+public/bundle.js

@@ -2,49 +2,49 @@ import { SECTION_SIZE, SIZE } from "../constants/main.constants";
 import { IAvatarComment } from "../interfaces/IAvatarComment.interface";
 import { IAvatarImage } from "../interfaces/IAvatarImage.interface";
 import { promiseProgress } from "./promiseProgress";
+import {grey} from '@material-ui/core/colors'
+// export const drawAvatar = async (canvas: HTMLCanvasElement, x: number, y: number, inRow: number) => {
+//   const tmpCtx = canvas.getContext('2d');
 
-export const drawAvatar = async (canvas: HTMLCanvasElement, x: number, y: number, inRow: number) => {
-  const tmpCtx = canvas.getContext('2d');
-
-  const img = document.createElement('img');
-
-
-  const padding = 10;
-  const size = (canvas.width - 2 * padding) / inRow;
-
-  img.src = "ja.jpg";
-  img.onload = () => {
-    if (!tmpCtx) return;
-    var tmpCanvas2 = document.createElement('canvas');
-    var tmpCtx2 = tmpCanvas2.getContext('2d');
-    if (!tmpCtx2) return;
+//   const img = document.createElement('img');
 
 
+//   const padding = 10;
+//   const size = (canvas.width - 2 * padding) / inRow;
 
-    tmpCtx2.save();
-    tmpCtx2.beginPath();
-    tmpCtx2.arc(75, 75, 75, 0, Math.PI * 2, true);
-    tmpCtx2.closePath();
-    tmpCtx2.clip();
-
-    tmpCtx2.drawImage(img, 0, 0);
-
-    tmpCtx2.beginPath();
-    tmpCtx2.arc(0, 0, 25, 0, Math.PI * 2, true);
-    tmpCtx2.clip();
-    tmpCtx2.closePath();
-    tmpCtx2.restore();
+//   img.src = "ja.jpg";
+//   img.onload = () => {
+//     if (!tmpCtx) return;
+//     var tmpCanvas2 = document.createElement('canvas');
+//     var tmpCtx2 = tmpCanvas2.getContext('2d');
+//     if (!tmpCtx2) return;
 
 
-    tmpCtx.shadowOffsetX = 0;
-    tmpCtx.shadowOffsetY = 0;
-    tmpCtx.shadowColor = 'black';
-    tmpCtx.shadowBlur = padding;
 
-    tmpCtx.drawImage(tmpCanvas2, x * size + padding, y * size + padding, size * 2, size);
-    img.remove();
-  }
-}
+//     tmpCtx2.save();
+//     tmpCtx2.beginPath();
+//     tmpCtx2.arc(75, 75, 75, 0, Math.PI * 2, true);
+//     tmpCtx2.closePath();
+//     tmpCtx2.clip();
+
+//     tmpCtx2.drawImage(img, 0, 0);
+
+//     tmpCtx2.beginPath();
+//     tmpCtx2.arc(0, 0, 25, 0, Math.PI * 2, true);
+//     tmpCtx2.clip();
+//     tmpCtx2.closePath();
+//     tmpCtx2.restore();
+
+
+//     tmpCtx.shadowOffsetX = 0;
+//     tmpCtx.shadowOffsetY = 0;
+//     tmpCtx.shadowColor = 'black';
+//     tmpCtx.shadowBlur = padding;
+
+//     tmpCtx.drawImage(tmpCanvas2, x * size + padding, y * size + padding, size * 2, size);
+//     img.remove();
+//   }
+// }
 
 // export const drawAvatars = async (canvas: HTMLCanvasElement, avatars: IAvatarComment[], inRow: number, padding: number) => {
 //   const tmpCtx = canvas.getContext('2d');
@@ -98,7 +98,7 @@ interface ICoordImage {
 const getCoordImage = (avatar: IAvatarComment) => new Promise<ICoordImage>((resolve, reject) => {
   const { profilePictureUrl: src, x, y } = avatar;
   const img = document.createElement('img');
-  img.src = src;
+  img.src = `images/${src}`;
   img.onload = () => {
     resolve({
       img, x, y
@@ -127,7 +127,7 @@ export const drawAvatars = async (canvas: HTMLCanvasElement, avatars: IAvatarCom
     var tmpCtx = tmpCanvas.getContext('2d');
     if (!tmpCtx) throw ('Err');
 
-    tmpCtx.filter = 'blur(16px)';
+    tmpCtx.filter = 'blur(4px)';
     tmpCtx.save();
     tmpCtx.beginPath();
     tmpCtx.arc(75, 75, 75, 0, Math.PI * 2, true);
