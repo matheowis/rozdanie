@@ -18,14 +18,16 @@ export const processInputFiles = async (fileName: string): Promise<IComment[]> =
     if (line.startsWith('profilePictureUrl')) continue;
     const splitted = line.split(',');
     const [profilePictureUrl, profileUrl, username, commentDate, likeCount] = splitted;
-    const comment = splitted.slice(5).join(',');
+    const comment = splitted.slice(5).join(',') + ' ';
     let attached = getFromBetween(comment, '@', ' ') || getFromBetween(comment, '@', ',') || getFromBetween(comment, '@', '.') || undefined;
 
+    const date = new Date(commentDate)
+    date.setTime(date.getTime() + (60*60*1000));
     holder.push({
       profilePictureUrl,
       profileUrl,
       username,
-      commentDate,
+      commentDate:date.toISOString(),
       likeCount: parseInt(likeCount),
       comment,
       attached
