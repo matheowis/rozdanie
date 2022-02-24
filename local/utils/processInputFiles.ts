@@ -18,6 +18,7 @@ export const processInputFiles = async (fileName: string): Promise<IComment[]> =
     if (line.startsWith('profilePictureUrl')) continue;
     const splitted = line.split(',');
     const [profilePictureUrl, profileUrl, username, commentDate, likeCount] = splitted;
+    if(commentDate === '') continue;
     const comment = splitted.slice(5).join(',') + ' ';
     let attached = getFromBetween(comment, '@', ' ') || getFromBetween(comment, '@', ',') || getFromBetween(comment, '@', '.') || undefined;
 

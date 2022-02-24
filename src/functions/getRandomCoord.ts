@@ -20,3 +20,21 @@ export const getRandomCoords = (comments: IComment[], size: number, spread = 2):
 
   return avatarComments;
 }
+
+export const getTextureCoords = (comments: IComment[], size: number): IAvatarComment[] => {
+  let index = 0;
+  const avatarComments: IAvatarComment[] = [];
+  for (var x = 0; x < size; x ++) {
+    for (var y = 0; y < size; y ++) {
+      if(!comments[avatarComments.length]) return avatarComments;
+      avatarComments.push({
+        ...comments[avatarComments.length],
+        x,
+        y,
+      })
+      index++
+    }
+  }
+
+  return avatarComments;
+}

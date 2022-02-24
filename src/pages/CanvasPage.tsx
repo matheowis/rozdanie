@@ -54,17 +54,54 @@ const CanvasPage = () => {
   React.useEffect(() => {
     console.log('START');
     handleImages();
-    // console.log('start')
+  }, [])
 
-    // fetch('meta', {
-    //   method: 'GET'
-    // }).then(res => res.json()).then(res2 => console.log(res2));
-    // const container = containerRef.current;
-    // if (!container) return;
+  const handleImages = async () => {
+    const container = containerRef.current;
 
-    // const avatarImages = createAvatarImages(testObjs);
+    const participantsRaw = await getParticipants();
+    // const participants =[
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    //   ...participantsRaw,
+    // ]
 
-    // const start = Date.now();
+    // const participants = participantsRaw
+
+    const imagesMap:{[key:string]:IComment} = participantsRaw.reduce((prev,curr) => {
+      prev[curr.username] = {
+        ...curr,
+        profilePictureUrl:`${curr.username}.png`
+      }
+      return prev;
+    },{} as {[key:string]:IComment});
+
+    const participants = Object.keys(imagesMap).map(k => imagesMap[k]);
+    console.log(participants.length)
+
+    console.log('START');
+    const start = Date.now();
+    const avatarImages = await createAvatarImages(participants, p => setProgress(p));
+
     // avatarImages.forEach(avatarImage => {
     //   const canvToAdd = avatarImage.image;
     //   const x = lerp(-128, 128, Math.random());
@@ -72,61 +109,12 @@ const CanvasPage = () => {
     //   canvToAdd.style.position = 'absolute';
     //   canvToAdd.style.left = `${x}px`;
     //   canvToAdd.style.bottom = `${y}px`;
-    //   // container.append(canvToAdd);
+    //   container?.append(canvToAdd);
     // });
 
-
-    // setTimeout(() => {
-    //   console.log(`texture creation too ${((Date.now() - 2000 - start) / 1000).toFixed(2)}s`,avatarImages.length)
-    //   console.log('timeout');
-    //   console.log(avatarImages[55].imgData);
-    // }, 2000);
-    // container.append(avatarImages[0].image);
-  }, [])
-
-  const handleImages = async () => {
-    const container = containerRef.current;
-
-    const participantsRaw = await getParticipants();
-    const participants =[
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-      ...participantsRaw,
-    ]
-
-
-    console.log('START');
-    const start = Date.now();
-    const avatarImages = await createAvatarImages(participants, p => setProgress(p));
-
-    avatarImages.forEach(avatarImage => {
-      const canvToAdd = avatarImage.image;
-      const x = lerp(-128, 128, Math.random());
-      const y = lerp(-128, 128, Math.random());
-      canvToAdd.style.position = 'absolute';
-      canvToAdd.style.left = `${x}px`;
-      canvToAdd.style.bottom = `${y}px`;
-      container?.append(canvToAdd);
-    });
+      //     const canvToAdd = avatarImage.image;
+      // console.log('ShowCanvas',avatarImages[0].image);
+      // container?.append(avatarImages[0].image);
 
     console.log(`FinishedIn ${((Date.now() - start) / 1000).toFixed(2)}s`);
     setLoaded(true);
@@ -138,15 +126,15 @@ const CanvasPage = () => {
     <div className={cs.root}>
       <div
         className={cs.inner}>
-        <div
+        {/* <div
           className={cs.container}
           ref={containerRef}
-        >
-          {/* {loaded ?
+        > */}
+          {loaded ?
           <Button variant='contained' color='primary' onClick={() => saveData(avatars)}>Get Images</Button> :
           <CircularProgress variant="determinate" size={100} value={progress} />
-        } */}
-        </div>
+        }
+        {/* </div> */}
       </div>
     </div>
   )

@@ -3,7 +3,8 @@ var fs = require('fs');
 var https = require('https');
 var express = require("express");
 var app = express();
-var data = require('./local/output/participants.json');
+var participants = require('./local/output/participants.json');
+var stats = require('./local/output/stats.json');
 
 app.set("port", process.env.PORT || 9090);
 app.use(express.json());
@@ -28,9 +29,11 @@ app.get('/images/*',(req,res) => {
 });
 
 app.get('/meta', (req,res) => {
-  res.json(data);
-
+  res.json(participants);
 })
+// app.get('/stats', (req,res) => {
+//   res.json(stats);
+// })
 
 app.listen(app.get("port"), () => {
   console.log("The server is listening on port", app.get("port"));

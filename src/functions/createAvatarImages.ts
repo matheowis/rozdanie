@@ -1,7 +1,7 @@
 import { IAvatarImage } from "../interfaces/IAvatarImage.interface";
 import { IComment } from "../interfaces/IComment.interface";
 import { drawAvatars } from "./drawAvatar";
-import { getRandomCoords } from './getRandomCoord';
+import { getRandomCoords, getTextureCoords } from './getRandomCoord';
 import {
   SIZE,
   IN_ROW,
@@ -15,16 +15,17 @@ import { promiseProgress } from "./promiseProgress";
 console.log('Avatars per texture is', AVATARS_PER_TEX);
 
 export const createAvatarImages = async (comments: IComment[],callback?:(prog:number) => any): Promise<IAvatarImage[]> => {
-  const maxComments = comments.length - (comments.length % AVATARS_PER_TEX);
-  const filteredComments = comments.slice(0, maxComments);
-
+  // const maxComments = comments.length - (comments.length % AVATARS_PER_TEX);
+  const filteredComments = comments.filter(v => v.profilePictureUrl);
+  console.log(filteredComments.length);
   const avatarImages: IAvatarImage[] = [];
 
   const promises: Promise<IAvatarImage>[] = [];
 
   for (var i = 0; i < filteredComments.length; i += AVATARS_PER_TEX) {
     const currentComments = filteredComments.slice(i, i + AVATARS_PER_TEX);
-    const avatarComments = getRandomCoords(currentComments, IN_ROW, SPREAD);
+    // const avatarComments = getRandomCoords(currentComments, IN_ROW, SPREAD);
+    const avatarComments = getTextureCoords(currentComments, IN_ROW);
     const canvas = document.createElement('canvas');
     canvas.width = SIZE;
     canvas.height = SIZE;

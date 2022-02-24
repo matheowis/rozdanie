@@ -1,9 +1,9 @@
-export const SIZE = 1024;
+export const SIZE = 2048;
 // export const IN_ROW = 64;
-export const IN_ROW = 64;
+export const IN_ROW = 8;
 // export const SPREAD = 8;
-export const SPREAD = 16;
-export const AVATARS_PER_TEX = (IN_ROW/SPREAD)**2;
+export const SPREAD = 0;
+export const AVATARS_PER_TEX = IN_ROW**2;
 export const PADDING = 4;
-export const SECTION_SIZE = (SIZE - 2*PADDING) / IN_ROW;
+export const SECTION_SIZE = SIZE/IN_ROW;
 
