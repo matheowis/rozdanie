@@ -1,4 +1,4 @@
-import { IComment } from "./comment.interface";
+import { IComment } from "./IComment.interface";
 
 export type TInvalidCommentType = 'duplicate'|'noAttachment';
 

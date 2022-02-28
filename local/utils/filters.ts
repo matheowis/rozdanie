@@ -1,6 +1,6 @@
-import { IComment } from "../interfaces/comment.interface";
+import { IComment } from "../interfaces/IComment.interface";
 import { IInvalidComment, IInvalidCommentMap, IInvalidCommentsMap } from "../interfaces/stat.interace";
-import { IFilter } from "../interfaces/filter.interface";
+import { IFilter } from "../interfaces/IFilter.interface";
 
 const getOlder = (a:IComment,b:IComment) => {
   return getDate(a.commentDate) <  getDate(b.commentDate)?a:b

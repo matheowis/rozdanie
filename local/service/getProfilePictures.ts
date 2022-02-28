@@ -1,7 +1,7 @@
 import fs = require('fs');
 import https = require('https');
-import { IComment } from '../interfaces/comment.interface';
-import { IFilter } from '../interfaces/filter.interface';
+import { IComment } from '../interfaces/IComment.interface';
+import { IFilter } from '../interfaces/IFilter.interface';
 
 const getAndSaveImg = (url: string, name: string) => new Promise<{ user: string, data: string }>((resolve, reject) => {
   console.log('witeStream');
